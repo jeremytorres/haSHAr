@@ -54,8 +54,10 @@
     NSOperationQueue * processQueue;
     NSBox *outputBox;
     NSTextFieldCell *fileProcessedLabel;
+    NSTableView *failedDigestsTableView;
 }
 
+@property (assign) IBOutlet NSTableView *failedDigestsTableView;
 @property (assign) IBOutlet NSTextFieldCell *fileProcessedLabel;
 @property (assign) IBOutlet NSBox *outputBox;
 @property (assign) IBOutlet NSButton *selectDirectoryButton;
