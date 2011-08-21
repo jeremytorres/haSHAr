@@ -67,7 +67,6 @@
 @property (assign) IBOutlet NSPathControl *pathControl;
 
 - (IBAction)selectDirectory:(id)sender;
-- (IBAction)findSelectedButton:(id)sender;
 - (IBAction)startProcessing:(id)sender;
 - (IBAction)cancelProcessing:(id)sender;
 

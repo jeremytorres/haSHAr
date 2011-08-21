@@ -57,7 +57,7 @@
     processedFileCnt = 0;
     
     // setup queues
-    processQueue = [[NSOperationQueue alloc] init];
+    processQueue = [NSOperationQueue new];
     [processQueue setName:@"ProcessQueue"];
     
     // instantiate haSHAr API
@@ -88,10 +88,13 @@
     // set panel to open to user's home dir
     [panel setDirectoryURL:[NSURL URLWithString:NSHomeDirectory()]];
     
-    [panel beginSheetModalForWindow:window completionHandler:^(NSInteger result) {
+    [panel beginSheetModalForWindow:window
+                  completionHandler:^(NSInteger result) {
         if (result == NSFileHandlingPanelOKButton)
         {
             // selection is made
+            [panel setDelegate:nil];
+            NSLog(@"Selection is made");
         }
         else if (result == NSFileHandlingPanelCancelButton)
         {
@@ -100,17 +103,13 @@
     }];
 }
 
-- (IBAction)findSelectedButton:(id)sender
-{
-    // get selected mode
-    //NSButtonCell *selCell = [sender selectedCell];
-    //NSLog(@"Selected cell is %ld", [selCell tag]);
-}
-
 -(void)fileProcessingComplete
 {
     [fileURLs release];
     fileURLs = nil;
+    
+    [fileExts release];
+    fileExts = nil;
     
     [outputBox setHidden:TRUE];
     [startButton setEnabled:TRUE];
@@ -132,7 +131,7 @@
     [selectDirectoryButton setEnabled:FALSE];
     
     // get selected mode
-    NSButtonCell *selCell = [modeRadioButton selectedCell];
+    NSButtonCell * selCell = [modeRadioButton selectedCell];
 
     NSUInteger mode = [selCell tag];
     
@@ -150,11 +149,11 @@
     [progressInd displayIfNeeded];
     
     // TODO get file extensions from UI
-    fileExts = [NSArray arrayWithObjects:@"NEF", nil];
+    fileExts = [[NSArray arrayWithObjects:@"NEF", nil] retain];
     
     // get files from chosen directory
     fileURLs = [[FileUtils retrieveFilesForDirectory:[directoryToProcess path]
-                                     fileExtensions:fileExts] retain];
+                                      fileExtensions:fileExts] retain];
     
     if (fileURLs != nil)
     {
@@ -166,7 +165,6 @@
         // create block operation to be placed on queue
         NSBlockOperation * processFilesOperation =
         [NSBlockOperation blockOperationWithBlock:^{
-
             // start processing files
             switch (mode)
             {
@@ -230,10 +228,11 @@
             [directoryToProcess release];
             directoryToProcess = nil;
         }
-
+        
         directoryToProcess = [url retain];
         
         // set path control
+
         [pathControl setURL:directoryToProcess];
         [pathControl setEnabled:TRUE];
         [pathControl setHidden:FALSE];

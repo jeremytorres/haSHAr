@@ -38,10 +38,13 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @implementation FileUtils
 
-+ (NSArray *) retrieveFilesForDirectory:(NSString *)directory fileExtensions:(
-       NSArray *)fileExtensions
++ (NSArray *) retrieveFilesForDirectory:(NSString *)directory
+                         fileExtensions:(NSArray *)fileExtensions
 {
-    NSMutableArray * files = nil;
+    NSMutableArray * files;
+    NSString * regularExpressionString;
+    NSPredicate * regExPredicate;
+    NSFileManager * fileManager;
 
     BOOL checkFileExt = fileExtensions == nil ? NO : YES;
 
@@ -51,27 +54,21 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                       NSURLIsDirectoryKey, NSURLIsRegularFileKey,
                       NSURLLocalizedNameKey, nil];
 
-    NSFileManager * fileManager = [[NSFileManager alloc] init];
+    fileManager = [NSFileManager new];
+    
     NSDirectoryEnumerator * enumerator =
         [fileManager enumeratorAtURL:directoryURL
           includingPropertiesForKeys:keys
                              options:(
              NSDirectoryEnumerationSkipsPackageDescendants |
              NSDirectoryEnumerationSkipsHiddenFiles)
-                        errorHandler:^(NSURL
-                        * url, NSError * error) {
+                        errorHandler:^(NSURL * url, NSError * error) {
              // Return YES if the enumeration should continue after the error.
-             NSLog (
-                 @"Error reading directory at %@\n%@",
-                 directoryURL,
-                 [error localizedFailureReason]);
-
+             NSLog (@"Error reading directory at %@\n%@", directoryURL,
+                    [error localizedFailureReason]);
              // return NO so enumeration does not continue
              return NO;
          }];
-
-    NSString * regularExpressionString = nil;
-    NSPredicate * regExPredicate = nil;
 
     if (checkFileExt)
     {
@@ -105,12 +102,11 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         NSLog (@"Regular expression string: %@", regularExpressionString);
 #endif
 
-        regExPredicate =
-            [NSPredicate predicateWithFormat:@"SELF MATCHES %@",
-             regularExpressionString];
+        regExPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",
+                                      regularExpressionString];
     }
 
-    files = [[NSMutableArray alloc] init];
+    files = [NSMutableArray new];
 
     for (NSURL * url in enumerator)
     {
@@ -125,7 +121,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         {
 
             NSString * localizedName = nil;
-            [url getResourceValue:&localizedName forKey:NSURLLocalizedNameKey
+            [url getResourceValue:&localizedName
+                           forKey:NSURLLocalizedNameKey
                             error:NULL];
 
             if (checkFileExt)
@@ -152,7 +149,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 + (NSData *) readMessageDigestFromURL:(NSURL *)targetFileURL
 {
-    NSMutableData * digestBytes = nil;
+    NSMutableData * digestBytes;
     NSError * error;
 
     // sidecar file assumed to have .sha1 ext
@@ -172,7 +169,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
     NSString * fileDigestHexStr =
         [NSString stringWithContentsOfURL:sideCarFileURL
-                                 encoding:NSUTF8StringEncoding error:&error];
+                                 encoding:NSUTF8StringEncoding
+                                    error:&error];
     
     if (fileDigestHexStr != nil)
     {
@@ -181,7 +179,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #endif
 
         NSUInteger fileDigestLen = [fileDigestHexStr length];
-        digestBytes = [[NSMutableData alloc] init];
+        digestBytes = [NSMutableData new];
         unsigned char wholeByte;
         char byteChars[3] = { '\0', '\0', '\0' };
         int i;
@@ -216,12 +214,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     return [digestBytes autorelease];
 }
 
-+ (int) writeMessageDigestRelativeToURL:(NSData *)digest fileURL:(NSURL *)
-   fileURL
++ (int) writeMessageDigestRelativeToURL:(NSData *)digest 
+                                fileURL:(NSURL *)fileURL
 {
     int returnCode = 0;
-
-    NSURL * newFileWithExtension = nil;
+    NSURL * newFileWithExtension;
+    NSError * writeError;
 
     NSString * origFileNameWithExtension = [fileURL lastPathComponent];
 
@@ -236,16 +234,18 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     NSMutableString * hex = [NSMutableString string];
 
     const unsigned char * rawDigest = (const unsigned char *)[digest bytes];
+    
     NSUInteger rawDigestLen = [digest length];
+    
     for (int i = 0; i < rawDigestLen; i++)
     {
         [hex appendFormat:@"%02X", rawDigest[i]];   // & 0x00FF];
     }
-
-    NSError * writeError;
-    BOOL success = [hex writeToURL:newFileWithExtension atomically:NO
-                          encoding:NSUTF8StringEncoding error:&writeError];
-
+    
+    BOOL success = [hex writeToURL:newFileWithExtension 
+                        atomically:NO
+                          encoding:NSUTF8StringEncoding
+                             error:&writeError];
     if (!success)
     {
         // an error occurred
