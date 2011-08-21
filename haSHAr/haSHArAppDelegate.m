@@ -36,6 +36,7 @@
 @synthesize progressInd;
 @synthesize cancelButton;
 @synthesize pathControl;
+@synthesize failedDigestsTableView;
 @synthesize fileProcessedLabel;
 @synthesize outputBox;
 @synthesize selectDirectoryButton;
