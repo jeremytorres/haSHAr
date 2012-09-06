@@ -7,8 +7,7 @@ The overall design goal of HaSHAr is to provide a simple-to-use file verificatio
 - Be based on a cryptographically-strong message digest algorithm, e.g., [SHA1] [2]
 - Provide a simple, human-readable side-car file containing the hash of the file.  For example, file "MyFile.txt" would have a corresponding "MyFile.txt.sha1" side-car containing a hex-encoded string.
 
-Other goals include
-
+Other goals include:
   - Share with the open source developer community;
   - Aid in a learning opportunity;
 
