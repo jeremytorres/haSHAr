@@ -1,111 +1,68 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset='utf-8'>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
 
-  <title>jtphotog/haSHAr @ GitHub</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #d0d2bf;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #2f2d40; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #2f2d40; }
-    h3 { text-align: center; color: #2f2d40; }
-    a { color: #2f2d40; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
+    <title>Hashar by jeremytorres</title>
+  </head>
 
-<body>
-  <a href="http://github.com/jtphotog/haSHAr"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  <body>
 
-  <div id="container">
+    <header>
+      <div class="container">
+        <h1>Hashar</h1>
+        <h2>File integrity verifier</h2>
 
-    <div class="download">
-      <a href="http://github.com/jtphotog/haSHAr/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/jtphotog/haSHAr/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+        <section id="downloads">
+          <a href="https://github.com/jeremytorres/haSHAr/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/jeremytorres/haSHAr/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/jeremytorres/haSHAr" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h2>HaSHAr</h2>
+
+<p>The overall design goal of HaSHAr is to provide a simple-to-use file verification tool for use on Mac OSX.  File verification should:</p>
+
+<ul>
+<li>Utilize the latest performance-enhanced libraries within OSX, e.g., Grand Central Dispatch <a href="http://developer.apple.com/library/mac/#documentation/Performance/Reference/GCD_libdispatch_Ref/Reference/reference.html">(GCD)</a> and async file I/O;</li>
+<li>Be based on a cryptographically-strong message digest algorithm, e.g., <a href="http://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man3/CC_SHA1.3cc.html">SHA1</a>
+</li>
+<li>Provide a simple, human-readable side-car file containing the hash of the file.  For example, file "MyFile.txt" would have a corresponding "MyFile.txt.sha1" side-car containing a hex-encoded string.</li>
+</ul><p>Other goals include:</p>
+
+<ul>
+<li>Share with the open source developer community;</li>
+<li>Aid in a learning opportunity;</li>
+</ul><p>Contact:
+<a href="mailto:photog.jt@gmail.com">photog.jt@gmail.com</a></p>
+
+<hr><h3>Current Status</h3>
+
+<p>There are two (2) build targets for XCode 4:</p>
+
+<ul>
+<li>
+<strong>CLI</strong>: for command line execution</li>
+</ul><p>The CLI target is fully functional and can be use to generate/verify files based on file extensions.</p>
+
+<ul>
+<li>
+<strong>haSHAr</strong>_: GUI control</li>
+</ul><p>The haSHAr GUI target is a <em>Work in Progress</em>.  This is </p>
+
+<p>See the target's respective README.md file for more information.</p>
+      </section>
     </div>
 
-    <h1><a href="http://github.com/jtphotog/haSHAr">haSHAr</a>
-      <span class="small">by <a href="http://github.com/jtphotog">jtphotog</a></span></h1>
-
-    <div class="description">
-      File integrity verifier
-    </div>
-
-    <p>HaSHAr
-
-The overall design goal of HaSHAr is to provide a simple-to-use file verification tool for use on Mac OSX. File verification should:
-
-Utilize the latest performance-enhanced libraries within OSX, e.g., Grand Central Dispatch (GCD) and async file I/O;
-Be based on a cryptographically-strong message digest algorithm, e.g., SHA1
-Other goals include
-
-Share with the open source developer community;
-Aid in a learning opportunity;</p><h2>Dependencies</h2>
-<p>Mac OSX 10.7 (Lion)</p>
-<h2>Install</h2>
-<p>TBD</p>
-<h2>License</h2>
-<p>Copyright (c) 2011 Jeremy Torres, https://github.com/jtphotog/haSHAr
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-<h2>Authors</h2>
-<p>Jeremy Torres (photog.jt@gmail.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Jeremy Torres (photog.jt@gmail.com)</p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/jtphotog/haSHAr/zipball/master">zip</a> or
-      <a href="http://github.com/jtphotog/haSHAr/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/jtphotog/haSHAr</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/jtphotog/haSHAr">jtphotog/haSHAr</a>
-    </div>
-
-  </div>
-
-  
-</body>
+    
+  </body>
 </html>
